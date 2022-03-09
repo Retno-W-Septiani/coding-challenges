@@ -1,0 +1,11 @@
+# Creating list
+# list1 = [1, 2, 3, 6, 8, 12, 20, 32, 46, 85]
+# print(list1)
+# Filtering list
+# list1 = [1, 2, 3, 6, 8, 12, 20, 32, 46, 85]
+# for i in list1:
+#     if i < 5:
+#         print(i)
+# make it in one line
+list1 = [1, 2, 3, 6, 8, 12, 20, 32, 46, 85]; print([i for i in list1 if i < 5])
+#wohoooo
