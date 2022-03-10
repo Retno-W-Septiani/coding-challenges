@@ -22,7 +22,6 @@ with open("2specieses.csv") as speciesdata_csv:
             species.append(row[4])
 print("specieses available: " + str(species))
 
-# I am still trying to figure out how to put the species list into the arcpy automation code
 # # # 2. converting csv into a shp file
 for i in species:
     in_Table = "2specieses.csv"  # # # I really wanna automate this one so we don't need to change it, but still trying
