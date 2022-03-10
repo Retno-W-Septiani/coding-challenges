@@ -86,6 +86,7 @@ for i in species:
 
     if arcpy.Exists(out_feature_class):
         print("Created Heatmap file successfully!")
+        # # # bellow are additional
         # print("Deleting intermediate files")
         # arcpy.Delete_management(target_features)
         # arcpy.Delete_management(join_features)
