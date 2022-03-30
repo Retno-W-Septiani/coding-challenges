@@ -1,4 +1,11 @@
-# # # Activate arcpy
+# # # This is Coding Challenge 5
+# # Retno Septiani (March 9, 2022)
+
+# # This code generates fishnets for different specieses that listed in CSV file
+# # In this case, there are 2 specieses
+
+
+# # # Activate arcpy & CSV
 import arcpy
 import csv
 
@@ -22,74 +29,70 @@ with open("2specieses.csv") as speciesdata_csv:
             species.append(row[4])
 print("specieses available: " + str(species))
 
-# # # 2. converting csv into a shp file
-# for i in species:
-#     in_Table = "2specieses.csv"  # # # I really wanna automate this one so we don't need to change it, but still trying
-#     x_coords = "decimallongitude"
-#     y_coords = "decimallatitude"
-#     z_coords = ""
-#     out_Layer = i
-#     saved_Layer = str(i) + '.shp'
-#     spRef = arcpy.SpatialReference(4326)  # # setting the spatial reference where 4326 == WGS 1984
-#     # # system is creating the shp file
-#     lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, z_coords)
-#     # # saving the shp file
-#     arcpy.CopyFeatures_management(lyr, saved_Layer)
-#     if arcpy.Exists(saved_Layer):
-#         print("CSV file converted successfully!")
-#     # # # # 3. defining the extent
-#     desc = arcpy.Describe(saved_Layer)
-#     XMin = desc.extent.XMin
-#     XMax = desc.extent.XMax
-#     YMin = desc.extent.YMin
-#     YMax = desc.extent.YMax
-#     print("Extent:" "\nXMin = " + str(XMin) + "\nXMax = " + str(XMax) +
-#           "\nYMin = " + str(YMin) + "\nYMax = " + str(YMax))
-#     # # # 4. Creating Fishnet shp file
-#     outFeatureClass = str(i) + "_Fishnet.shp"  # Name of output fishnet
-#
-#     # setting the fishnet area
-#     originCoordinate = str(XMin) + " " + str(YMin)
-#     yAxisCoordinate = str(XMin) + " " + str(YMin + 1)
-#     cellSizeWidth = "5"  # # # i am using 5 x 5
-#     cellSizeHeight = "5"
-#     numRows = ""
-#     numColumns = ""
-#     oppositeCorner = str(XMax) + " " + str(YMax)
-#     labels = "NO_LABELS"
-#     templateExtent = "#"
-#     geometryType = "POLYGON"
-#
-#     # system is generating the fishnet file
-#     arcpy.CreateFishnet_management(outFeatureClass, originCoordinate, yAxisCoordinate,
-#                                    cellSizeWidth, cellSizeHeight, numRows, numColumns,
-#                                    oppositeCorner, labels, templateExtent, geometryType)
-#
-#     if arcpy.Exists(outFeatureClass):
-#         print("Created Fishnet file successfully!")
-#
-#     # # # 5. Joining the two shp file (fishnet and species coordinate)
-#     target_features = str(i) + "_Fishnet.shp"
-#     join_features = str(i) + '.shp'
-#     out_feature_class = str(i) + "_heatmap.shp"
-#     join_operation = "JOIN_ONE_TO_ONE"
-#     join_type = "KEEP_ALL"
-#     field_mapping = ""
-#     match_option = "INTERSECT"
-#     search_radius: str = ""
-#     distance_field_name = ""
-#
-#     arcpy.SpatialJoin_analysis(target_features, join_features, out_feature_class,
-#                                join_operation, join_type, field_mapping, match_option,
-#                                search_radius, distance_field_name)
-#
-#     if arcpy.Exists(out_feature_class):
-#         print("Created Heatmap file successfully!")
-#         # # # bellow are additional
-#         # print("Deleting intermediate files")
-#         # arcpy.Delete_management(target_features)
-#         # arcpy.Delete_management(join_features)
-#     #
-#     #
-with arcpy.EnvManager(XYDomain="-400 -400 400 400", extent="-71.8958522149999 41.146167496 -71.120483223 42.0188825390001"):
-    arcpy.analysis.CreateThiessenPolygons("firestations", r"C:\Users\Wulan\Documents\ArcGIS\Projects\MyProject3\MyProject3.gdb\firestations_CreateThiessenP1", "ONLY_FID")
+# # 2. converting csv into a shp file
+for i in species:
+    in_Table = "2specieses.csv"  # # # I really wanna automate this one so we don't need to change it, but still trying
+    x_coords = "decimallongitude"
+    y_coords = "decimallatitude"
+    z_coords = ""
+    out_Layer = i
+    saved_Layer = str(i) + '.shp'
+    spRef = arcpy.SpatialReference(4326)  # # setting the spatial reference where 4326 == WGS 1984
+    # # system is creating the shp file
+    lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, z_coords)
+    # # saving the shp file
+    arcpy.CopyFeatures_management(lyr, saved_Layer)
+    if arcpy.Exists(saved_Layer):
+        print("CSV file converted successfully!")
+    # # # # 3. defining the extent
+    desc = arcpy.Describe(saved_Layer)
+    XMin = desc.extent.XMin
+    XMax = desc.extent.XMax
+    YMin = desc.extent.YMin
+    YMax = desc.extent.YMax
+    print("Extent:" "\nXMin = " + str(XMin) + "\nXMax = " + str(XMax) +
+          "\nYMin = " + str(YMin) + "\nYMax = " + str(YMax))
+    # # # 4. Creating Fishnet shp file
+    outFeatureClass = str(i) + "_Fishnet.shp"  # Name of output fishnet
+
+    # setting the fishnet area
+    originCoordinate = str(XMin) + " " + str(YMin)
+    yAxisCoordinate = str(XMin) + " " + str(YMin + 1)
+    cellSizeWidth = "5"  # # # i am using 5 x 5
+    cellSizeHeight = "5"
+    numRows = ""
+    numColumns = ""
+    oppositeCorner = str(XMax) + " " + str(YMax)
+    labels = "NO_LABELS"
+    templateExtent = "#"
+    geometryType = "POLYGON"
+
+    # system is generating the fishnet file
+    arcpy.CreateFishnet_management(outFeatureClass, originCoordinate, yAxisCoordinate,
+                                   cellSizeWidth, cellSizeHeight, numRows, numColumns,
+                                   oppositeCorner, labels, templateExtent, geometryType)
+
+    if arcpy.Exists(outFeatureClass):
+        print("Created Fishnet file successfully!")
+
+    # # # 5. Joining the two shp file (fishnet and species coordinate)
+    target_features = str(i) + "_Fishnet.shp"
+    join_features = str(i) + '.shp'
+    out_feature_class = str(i) + "_heatmap.shp"
+    join_operation = "JOIN_ONE_TO_ONE"
+    join_type = "KEEP_ALL"
+    field_mapping = ""
+    match_option = "INTERSECT"
+    search_radius: str = ""
+    distance_field_name = ""
+
+    arcpy.SpatialJoin_analysis(target_features, join_features, out_feature_class,
+                               join_operation, join_type, field_mapping, match_option,
+                               search_radius, distance_field_name)
+
+    if arcpy.Exists(out_feature_class):
+        print("Created Heatmap file successfully!")
+        # # # bellow are additional
+        # print("Deleting intermediate files")
+        # arcpy.Delete_management(target_features)
+        # arcpy.Delete_management(join_features)
