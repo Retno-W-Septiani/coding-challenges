@@ -20,6 +20,7 @@ arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-c
 arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # # Defining csv files in the directory
+# # There are two CSV files containing the facility, and both files has been adjusted to have the same column
 path = arcpy.env.workspace
 all_files = os.listdir(arcpy.env.workspace)
 csv_files = list(filter(lambda f: f.endswith('.csv'), all_files))
