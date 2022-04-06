@@ -1,3 +1,11 @@
+# # # This is Unsupervised classification - iso cluster tool which is a tool
+# # that automatically finds the clusters in an image and outputs a classified image.
+# # In this case, the users do not need to determine any class sample, signature files or training
+# # because all work is done by the computer.
+
+# # # Retno Septiani (March,2022)
+
+
 import arcpy
 from arcpy.sa import *
 arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\CC4"  # change the directory here
@@ -14,5 +22,4 @@ arcpy.CheckOutExtension("Spatial")
 
 # Execute IsoCluster
 outUnsupervised = IsoClusterUnsupervisedClassification(inRaster, classes, minMembers, sampInterval)
-outUnsupervised.save(r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\CC4\result.tif")  # change path and
-                                                                                            # file name before .tif
+outUnsupervised.save(r"result.tif")  # change file name before .tif
