@@ -16,8 +16,6 @@ arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-c
 arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # # # 1. Inputting species names into a list
-file = open("2specieses.csv", "r")  # # # If you wanna change the csv data
-csv_reader = csv.reader(file)
 
 # defining the species list
 species = []
@@ -92,7 +90,3 @@ for i in species:
 
     if arcpy.Exists(out_feature_class):
         print("Created Heatmap file successfully!")
-        # # # bellow are additional
-        # print("Deleting intermediate files")
-        # arcpy.Delete_management(target_features)
-        # arcpy.Delete_management(join_features)
