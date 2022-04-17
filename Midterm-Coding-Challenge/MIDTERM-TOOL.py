@@ -7,7 +7,7 @@
 # # Each Thiessen polygon defines an area of influence around its sample point,
 # # so that any location inside the polygon is closer to that point than any of the other sample points
 
-# # In hydrology, Thiessen polygon is used to calculate the influence of rainfal stations in a watershed
+# # In hydrology, Thiessen polygon is used to calculate the influence of rainfall stations in a watershed
 
 import arcpy
 import os
@@ -16,7 +16,7 @@ import csv
 arcpy.env.overwriteOutput = True  # to prevent error due to 'file already exist'
 
 # # # Change the path here
-arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\Midterm-Coding-Challenge"
+arcpy.env.workspace = r"C:\Data\Students_2022\Septiani\Midterm-Coding-Challenge"
 arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # # Defining csv files in the directory

@@ -12,7 +12,7 @@ import csv
 arcpy.env.overwriteOutput = True  # to prevent error due to 'file already exist'
 
 # # # Change the path here
-arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\CC5"
+arcpy.env.workspace = r"C:\Data\Students_2022\Septiani\CC5"
 arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # # # 1. Inputting species names into a list
@@ -25,7 +25,7 @@ with open("2specieses.csv") as speciesdata_csv:
     for row in csv.reader(speciesdata_csv):
         if row[4] not in species:
             species.append(row[4])
-print("specieses available: " + str(species))
+print("Species available: " + str(species))
 
 # # 2. converting csv into a shp file
 for i in species:
