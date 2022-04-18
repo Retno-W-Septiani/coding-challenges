@@ -16,7 +16,12 @@ import csv
 arcpy.env.overwriteOutput = True  # to prevent error due to 'file already exist'
 
 # # # Change the path here
-arcpy.env.workspace = r"C:\Data\Students_2022\Septiani\Midterm-Coding-Challenge"
+input_directory = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\Midterm-Coding-Challenge"
+if not os.path.exists(os.path.join(input_directory, "output")):
+    os.mkdir(os.path.join(input_directory, "output"))
+if not os.path.exists(os.path.join(input_directory, "temp_files")):
+    os.mkdir(os.path.join(input_directory, "temp_files"))
+arcpy.env.workspace = input_directory
 arcpy.env.outputCoordinateSystem = arcpy.SpatialReference(4326)
 
 # # Defining csv files in the directory
@@ -44,28 +49,42 @@ for i in csv_files:
     # # system is creating the shp file
     lyr = arcpy.MakeXYEventLayer_management(in_Table, x_coords, y_coords, out_Layer, spRef, z_coords)
     # # saving the shp file
-    arcpy.CopyFeatures_management(lyr, saved_Layer)
-    if arcpy.Exists(saved_Layer):
-        print("CSV files converted successfully!")
+    arcpy.CopyFeatures_management(lyr, os.path.join(input_directory, 'temp_files', saved_Layer))
 
-    # # Now that the CSV Have been converted to Shapefiles, Thiessen Polygons will be generated
-    # # based on the location of each facility
+# # But first, change the directory to temp_files where the shapefiles are
+os.chdir(os.path.join(input_directory, "temp_files"))  # same as env.workspace
+arcpy.env.workspace = os.path.join(input_directory, "temp_files")
+for i in csv_files:
+    variable = os.path.splitext(i)[0]
+    if arcpy.Exists(saved_Layer):
+        print(str(variable) + "shapefile has been converted from CSV successfully!")
+
+# Now that the CSV Have been converted to Shapefiles, Thiessen Polygons will be generated
+# based on the location of each facility
+
+for i in csv_files:
+    variable = os.path.splitext(i)[0]
+    # # Thiessen polygon generator
     inFeatures = str(variable) + '.shp'
     outFeatureClass = str(variable) + 'thiessen.shp'
     outFields = "ALL"
     # # Thiessen polygon generating tools
-    arcpy.CreateThiessenPolygons_analysis(inFeatures, outFeatureClass, outFields)
+    thiessen = arcpy.CreateThiessenPolygons_analysis(inFeatures, outFeatureClass, outFields)
     if arcpy.Exists(outFeatureClass):
-        print("Thiessen Polygons generated successfully!")
-
+        print(str(variable) + "Thiessen Polygons has been generated successfully!")
     # # The Polygons are created without boundaries
     # # This section clips the polygon using Rhode Island Boundary
-    arcpy.Clip_analysis(str(variable) + 'thiessen.shp', 'Municipalities__1989_.shp', str(variable) + 'coverage.shp')
-    if arcpy.Exists(str(variable) + 'coverage.shp'):
-        print("Facilities Coverage generated successfully!")
+    clipped = str(variable) + 'coverage.shp'
+    clipping = arcpy.Clip_analysis(outFeatureClass, str(input_directory) + '\Municipalities__1989_.shp', clipped )
+    arcpy.CopyFeatures_management(clipping, os.path.join(input_directory, 'output', clipped))
 
+os.chdir(os.path.join(input_directory, "output"))
+for i in csv_files:
+    variable = os.path.splitext(i)[0]
+    if arcpy.Exists(str(variable) + 'coverage.shp'):
+        print(str(variable) + " coverage area has been generated successfully!")
     # # To find out about the 'area' of the coverage, it needs to be calculated
-    # # But first, add a new field named 'area' in the attribute tables
+    # #  But first, add a new field named 'area' in the attribute tables
     inFeatures = str(variable) + 'coverage.shp'
     fieldName1 = "area"
     fieldPrecision = 10
@@ -73,9 +92,7 @@ for i in csv_files:
     expression = '!shape.geodesicArea@Squaremiles!'  # # Calculate geometry with square mile as the unit
     arcpy.management.AddField(inFeatures, fieldName1, 'DOUBLE', fieldPrecision, fieldScale)
     arcpy.CalculateField_management(inFeatures, fieldName1, expression, "PYTHON3")
-    if arcpy.Exists(fieldName1):
-        print("Area field added in the attribute tables")
-        print("Calculating the area.....")
+    print("Calculating the coverage area of " + str(variable) + '.........')
 
     # # Pulling out the information of Facility name and it's area of coverage from attribute tables
     inFeatures = str(variable) + 'coverage.shp'
@@ -84,4 +101,7 @@ for i in csv_files:
     with arcpy.da.SearchCursor(inFeatures, fields) as cursor:
         print(str(variable) + 'area of coverage:')
         for row in cursor:
-            print(row)
+            # print(row)
+            print(u'Facility Name: {0}, Coverage Area: {1} square miles'.format(row[0], row[1]))
+
+arcpy.Delete_management(os.path.join(input_directory, "temp_files"))
