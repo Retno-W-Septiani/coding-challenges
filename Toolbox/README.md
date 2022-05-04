@@ -25,7 +25,6 @@
 ### The results are shown below:
 =======
 ## The result is here
->>>>>>> 1667e7f39b461c48af9b4da7a828cc12dcfe2036
 <p align="center" width="100%">
     <img width="150%" src="https://github.com/Retno-W-Septiani/coding-challenges/blob/main/Toolbox/Result.jpg">
 </p>
