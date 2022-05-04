@@ -13,7 +13,7 @@ import csv
 arcpy.env.overwriteOutput = True  # to prevent error due to 'file already exist'
 
 # # # Change the path here
-input_directory = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\CC8"
+input_directory = r"C:\Data\Students_2022\Septiani\CC8"
 if not os.path.exists(os.path.join(input_directory, "output")):
     os.mkdir(os.path.join(input_directory, "output"))
 if not os.path.exists(os.path.join(input_directory, "temp_files")):
@@ -107,3 +107,4 @@ def HeatmapGenerator(fileextension):
             print('Dataset Not Found')
 
 HeatmapGenerator('*.csv')
+
