@@ -27,7 +27,6 @@
 ## The result is here
 >>>>>>> 1667e7f39b461c48af9b4da7a828cc12dcfe2036
 <p align="center" width="100%">
-    <img width="150%" src="https://github.com/Retno-W-Septiani/coding-challenges/commit/2ff1a13f1612e01b3a73424df8fd91e4837a08d0">
+    <img width="150%" src="https://github.com/Retno-W-Septiani/coding-challenges/blob/main/Toolbox/Result.jpg">
 </p>
 
-## this is not a well commented script, please don't grade it yet
