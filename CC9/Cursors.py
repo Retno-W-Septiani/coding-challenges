@@ -3,12 +3,13 @@
 
 # # In this coding challenge, cursor function is utilized to modify some information in the attribute table
 
-import arcpy
+import arcpy, os
 
 arcpy.env.overwriteOutput = True
-arcpy.env.workspace = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\CC9"  # # Change the path here
+directory = r"C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\CC9"
+arcpy.env.workspace = directory  # # Change the path here
 
-input_shp = r'C:\Users\Wulan\Documents\Phd\Spring 2022\NRS528\coding-challenges\CC9\CC9Data\RI_Forest_Health_Works_Project%3A_Points_All_Invasives.shp'
+input_shp = os.path.join(directory, r'RI_Forest_Health_Works_Project%3A_Points_All_Invasives.shp')
 field = ['photo']  # # I manually typed the field just to be more specific
 
 # # Creating a list of the feature classes under the chosen field
@@ -61,7 +62,7 @@ if arcpy.Exists('RecordsWithPhotos.shp'):
     print("A Shapefile of records with photos has been generated")
 
 # # for ones without photos
-expression2 = arcpy.AddFieldDelimiters(input_shp, 'photo') + " = ' '"
+expression2 = arcpy.AddFieldDelimiters(input_shp, 'photo') + " <> 'y'"
 try:
     # # Selecting the layer by attribute, in this case is for ones without photo
     input2 = arcpy.SelectLayerByAttribute_management(input_shp, 'NEW_SELECTION', expression2)
