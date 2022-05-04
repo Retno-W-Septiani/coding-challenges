@@ -1,5 +1,5 @@
 # This is Hydrology Bundle Toolbox
-<<<<<<< HEAD
+
 ### In this Hydrology Bundle Toolbox, a DEM file will be the only input to generate four hydrology products which are : watershed boundary (shapefile), river streamline (shapefile), flow length (tif), and river distance (tif)
 ### Multiple steps are needed to delineate or generate watersheds boundary using Arc-GIS,  such as:
 1. Fill (Spatial Analyst)
@@ -23,8 +23,8 @@
 ### Overall, with this Hydrology Bundle Toolbox, we do not need to go back and forth to the toolbox and get confused to select the input
 
 ### The results are shown below:
-=======
-## The result is here
+
+
 <p align="center" width="100%">
     <img width="150%" src="https://github.com/Retno-W-Septiani/coding-challenges/blob/main/Toolbox/Result.jpg">
 </p>
